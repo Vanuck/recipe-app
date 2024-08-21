@@ -17,10 +17,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
-path('', include('recipe.urls'))
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('recipe.urls')),
+    path("admin/", admin.site.urls),
+    
+    path("recipes/", include("recipes.urls")),  # Include recipes app URLs
+    
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
